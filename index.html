@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CabanaClub Desktop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="texture"></div>
+    <div class="scanline"></div>
+
+    <header class="top-bar">
+      <div class="top-bar__brand">
+        <img src="media/Cabana_Club_one_line-removebg-preview.png" alt="CabanaClub Logo" />
+        <div class="top-bar__info">
+          <p>CabanaClub Broadcast OS</p>
+          <span>Live from Monaco · 82º & sunny</span>
+        </div>
+      </div>
+      <div class="top-bar__actions">
+        <button class="pill">Request Invite</button>
+        <button class="pill pill--ghost">Member Login</button>
+      </div>
+    </header>
+
+    <main class="desktop" id="desktop">
+      <section class="dock" aria-label="Cabana widgets">
+        <button class="dock__icon" data-open="window-tv">
+          <span>TV</span>
+          <small>Broadcast</small>
+        </button>
+        <button class="dock__icon" data-open="window-concierge">
+          <span>Concierge</span>
+          <small>Schedule</small>
+        </button>
+        <button class="dock__icon" data-open="window-guestbook">
+          <span>Guestbook</span>
+          <small>Messages</small>
+        </button>
+        <button class="dock__icon" data-open="window-weather">
+          <span>Weather</span>
+          <small>Azure</small>
+        </button>
+      </section>
+
+      <article class="widget" id="window-tv" style="top: 16vh; left: 6vw">
+        <header class="widget__titlebar" data-drag-handle>
+          <div>
+            <h2>CabanaClub Cable</h2>
+            <p>Channel selector · looping lounge feed</p>
+          </div>
+          <button class="widget__close" aria-label="Close window">×</button>
+        </header>
+        <div class="widget__body widget__body--tv">
+          <div class="tv-frame">
+            <div class="tv-frame__inner">
+              <video id="channel-video" class="tv-screen" autoplay muted loop playsinline></video>
+              <video id="static-video" class="tv-static" src="media/static.mp4" preload="auto" muted loop></video>
+              <div class="tv-overlay">
+                <span>Cabana Broadcast Unit</span>
+                <span>Channel <strong id="channel-label">01</strong></span>
+              </div>
+            </div>
+            <div class="tv-controls">
+              <button id="prev-channel" aria-label="Previous channel">◀ Prev</button>
+              <button id="next-channel" aria-label="Next channel">Next ▶</button>
+            </div>
+          </div>
+          <div class="tv-notes">
+            <p>Drag this window anywhere. Each channel re-colors the feed for a new Riviera mood.</p>
+            <p><span>Currently on rotation:</span> Lido Live · Nocturne Cruise · Azure A.M.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="widget" id="window-concierge" style="top: 22vh; right: 5vw">
+        <header class="widget__titlebar" data-drag-handle>
+          <div>
+            <h2>Concierge Desk</h2>
+            <p>Programming, arrivals, and nightly agenda</p>
+          </div>
+          <button class="widget__close" aria-label="Close window">×</button>
+        </header>
+        <div class="widget__body widget__body--list">
+          <ul>
+            <li>
+              <span class="label">Sunset Ritual</span>
+              <span>18:30 · Aperitifs at the heliport lounge.</span>
+            </li>
+            <li>
+              <span class="label">DJ Celeste</span>
+              <span>19:45 · Balearic promenade set, silk attire required.</span>
+            </li>
+            <li>
+              <span class="label">Midnight Swim</span>
+              <span>23:55 · Heated infinity pool & midnight cinema.</span>
+            </li>
+            <li>
+              <span class="label">After Hours</span>
+              <span>02:10 · Members only cassette exchange.</span>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="widget" id="window-guestbook" style="bottom: 6vh; left: 10vw">
+        <header class="widget__titlebar" data-drag-handle>
+          <div>
+            <h2>Guestbook</h2>
+            <p>Signals from the Riviera</p>
+          </div>
+          <button class="widget__close" aria-label="Close window">×</button>
+        </header>
+        <div class="widget__body widget__body--guestbook">
+          <div class="entry">
+            <p>"Your mix last night was transcendental. Sending love from Portofino."</p>
+            <span>— Sabine & Armand</span>
+          </div>
+          <div class="entry">
+            <p>"Reserving Cabana 7 for the regatta weekend. Keep the rosé on ice."</p>
+            <span>— The Odessa Crew</span>
+          </div>
+          <div class="entry">
+            <p>"Channel 03 pairs perfectly with the morning swim. Merci!"</p>
+            <span>— Giselle</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="widget" id="window-weather" style="bottom: 10vh; right: 8vw">
+        <header class="widget__titlebar" data-drag-handle>
+          <div>
+            <h2>Azure Conditions</h2>
+            <p>Cabana status monitor</p>
+          </div>
+          <button class="widget__close" aria-label="Close window">×</button>
+        </header>
+        <div class="widget__body widget__body--status">
+          <div>
+            <span class="status-label">Sky</span>
+            <strong>Crystal blue · zero clouds</strong>
+          </div>
+          <div>
+            <span class="status-label">Water Temp</span>
+            <strong>23ºC · ideal for dusk swims</strong>
+          </div>
+          <div>
+            <span class="status-label">Signal Strength</span>
+            <strong>96% · Riviera wide</strong>
+          </div>
+          <div>
+            <span class="status-label">Dress Memo</span>
+            <strong>Poolside formal · sunglasses mandatory</strong>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <script src="script.js" type="module"></script>
+  </body>
+</html>
