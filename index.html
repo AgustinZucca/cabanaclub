@@ -21,12 +21,12 @@
         <img src="media/Cabana_Club_one_line-removebg-preview.png" alt="CabanaClub Logo" />
         <div class="top-bar__info">
           <p>CabanaClub Broadcast OS</p>
-          <span>Live from Monaco · 82º & sunny</span>
+          <span>Live from Monaco · 28°C & sunny</span>
         </div>
       </div>
       <div class="top-bar__actions">
-        <button class="pill">Request Invite</button>
-        <button class="pill pill--ghost">Member Login</button>
+        <button class="pill" data-auth="invite">Request Invite</button>
+        <button class="pill pill--ghost" data-auth="login">Member Login</button>
       </div>
     </header>
 
@@ -162,6 +162,61 @@
         </div>
       </article>
     </main>
+
+    <div class="auth-overlay hidden" id="auth-overlay" aria-hidden="true">
+      <div class="auth-overlay__backdrop" data-auth-close></div>
+      <section class="auth-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+        <header class="auth-card__header">
+          <h2 id="auth-title">Member Access</h2>
+          <button class="auth-card__close" aria-label="Close access window" data-auth-close>×</button>
+        </header>
+        <div class="auth-card__tabs" role="tablist">
+          <button class="auth-tab is-active" type="button" role="tab" aria-selected="true" data-panel-toggle="invite">
+            Request Invite
+          </button>
+          <button class="auth-tab" type="button" role="tab" aria-selected="false" data-panel-toggle="login">
+            Member Login
+          </button>
+        </div>
+        <form class="auth-form" id="invite-form" data-panel="invite" novalidate>
+          <label>
+            Full Name
+            <input type="text" name="name" placeholder="e.g. Celeste Mare" required />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" placeholder="guest@cabanaclub.com" required />
+          </label>
+          <label>
+            Number of Guests
+            <input type="number" name="guests" min="1" max="6" value="1" required />
+          </label>
+          <label>
+            Preferred Arrival
+            <input type="text" name="arrival" placeholder="Sunset catamaran · 19:00" />
+          </label>
+          <button class="pill pill--solid" type="submit">Send Invite Request</button>
+        </form>
+
+        <form class="auth-form hidden" id="login-form" data-panel="login" novalidate>
+          <label>
+            Membership ID
+            <input type="text" name="member" placeholder="CABANA-000" required />
+          </label>
+          <label>
+            Access Code
+            <input type="password" name="access" placeholder="••••••" minlength="4" required />
+          </label>
+          <label>
+            MFA Phrase
+            <input type="text" name="phrase" placeholder="Sunrise over Saint-Raphaël" />
+          </label>
+          <button class="pill pill--solid" type="submit">Unlock Lounge</button>
+        </form>
+
+        <p class="auth-card__status" id="auth-status" aria-live="polite"></p>
+      </section>
+    </div>
 
     <script src="script.js" type="module"></script>
   </body>

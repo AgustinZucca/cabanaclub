@@ -144,3 +144,143 @@ const primaryWindow = document.getElementById('window-tv');
 if (primaryWindow) {
   bringToFront(primaryWindow);
 }
+
+// Auth & invite panel logic
+const authOverlay = document.getElementById('auth-overlay');
+const authTabs = document.querySelectorAll('[data-panel-toggle]');
+const authForms = document.querySelectorAll('.auth-form');
+const authStatus = document.getElementById('auth-status');
+const authTriggers = document.querySelectorAll('[data-auth]');
+const authCloseButtons = document.querySelectorAll('[data-auth-close]');
+const inviteForm = document.getElementById('invite-form');
+const loginForm = document.getElementById('login-form');
+const inviteStorageKey = 'cabanaClubInvites';
+
+const showAuthStatus = (message, isError = false) => {
+  if (!authStatus) return;
+  authStatus.textContent = message;
+  authStatus.classList.toggle('is-error', Boolean(isError));
+};
+
+const setActivePanel = (panel = 'invite') => {
+  authTabs.forEach((tab) => {
+    const isActive = tab.dataset.panelToggle === panel;
+    tab.classList.toggle('is-active', isActive);
+    tab.setAttribute('aria-selected', String(isActive));
+  });
+
+  authForms.forEach((form) => {
+    const isActive = form.dataset.panel === panel;
+    form.classList.toggle('hidden', !isActive);
+    if (isActive) {
+      form.reset?.();
+    }
+  });
+
+  showAuthStatus('');
+};
+
+const openAuthPanel = (panel = 'invite') => {
+  if (!authOverlay) return;
+  authOverlay.classList.remove('hidden');
+  authOverlay.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('is-modal-open');
+  setActivePanel(panel);
+};
+
+const closeAuthPanel = () => {
+  if (!authOverlay) return;
+  authOverlay.classList.add('hidden');
+  authOverlay.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('is-modal-open');
+  showAuthStatus('');
+};
+
+authTriggers.forEach((trigger) => {
+  trigger.addEventListener('click', () => {
+    const panel = trigger.dataset.auth || 'invite';
+    openAuthPanel(panel);
+  });
+});
+
+authCloseButtons.forEach((button) => {
+  button.addEventListener('click', closeAuthPanel);
+});
+
+authTabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    setActivePanel(tab.dataset.panelToggle);
+  });
+});
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closeAuthPanel();
+  }
+});
+
+const getInvites = () => {
+  try {
+    return JSON.parse(localStorage.getItem(inviteStorageKey) || '[]');
+  } catch (error) {
+    console.error('Unable to parse invites', error);
+    return [];
+  }
+};
+
+const saveInvites = (invites) => {
+  localStorage.setItem(inviteStorageKey, JSON.stringify(invites));
+};
+
+const isValidEmail = (value) => /.+@.+\..+/.test(value);
+
+inviteForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formData = new FormData(inviteForm);
+  const name = (formData.get('name') || '').toString().trim();
+  const email = (formData.get('email') || '').toString().trim().toLowerCase();
+  const guests = Number(formData.get('guests')) || 0;
+  const arrival = (formData.get('arrival') || '').toString().trim();
+
+  if (!name || !isValidEmail(email) || guests < 1) {
+    showAuthStatus('Please share a name, valid email, and guest count.', true);
+    return;
+  }
+
+  const invites = getInvites();
+  const alreadyInvited = invites.find((entry) => entry.email === email);
+  if (alreadyInvited) {
+    showAuthStatus('You are already on the beach list—check your inbox for updates.', false);
+    return;
+  }
+
+  const newInvite = {
+    name,
+    email,
+    guests,
+    arrival,
+    submittedAt: new Date().toISOString(),
+  };
+
+  invites.push(newInvite);
+  saveInvites(invites);
+  inviteForm.reset();
+  showAuthStatus(`Invite request received for ${name}. We'll confirm within 24 hours.`, false);
+});
+
+loginForm?.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formData = new FormData(loginForm);
+  const member = (formData.get('member') || '').toString().trim();
+  const access = (formData.get('access') || '').toString().trim();
+
+  if (member.length < 4 || access.length < 4) {
+    showAuthStatus('Enter your membership ID and 4+ digit access code.', true);
+    return;
+  }
+
+  showAuthStatus(`Welcome back, ${member.toUpperCase()} · lounge unlocked.`, false);
+  setTimeout(() => {
+    closeAuthPanel();
+  }, 1800);
+});

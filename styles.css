@@ -1,16 +1,17 @@
 :root {
   color-scheme: light;
-  --bg: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.25), transparent 55%),
-    radial-gradient(circle at 80% 0%, rgba(255, 205, 178, 0.5), transparent 45%),
-    radial-gradient(circle at 20% 80%, rgba(163, 216, 255, 0.45), transparent 40%),
-    linear-gradient(135deg, #041627 0%, #09345f 35%, #3d739a 68%, #f3d2c1 110%);
-  --surface: rgba(7, 21, 41, 0.65);
-  --card: rgba(255, 255, 255, 0.08);
-  --border: rgba(255, 255, 255, 0.25);
-  --text: #f5f5f1;
-  --accent: #f4c7a5;
-  --accent-strong: #ff8f6b;
-  font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --bg: radial-gradient(circle at 12% 20%, rgba(255, 255, 255, 0.35), transparent 50%),
+    radial-gradient(circle at 85% 15%, rgba(255, 209, 148, 0.65), transparent 45%),
+    radial-gradient(circle at 10% 80%, rgba(125, 221, 214, 0.55), transparent 40%),
+    linear-gradient(135deg, #062335 0%, #05668d 35%, #3793a6 60%, #f4d35e 85%, #f3722c 110%);
+  --surface: rgba(9, 28, 44, 0.65);
+  --card: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.35);
+  --text: #fffdf4;
+  --accent: #ffe0b5;
+  --accent-strong: #ff8c61;
+  --aqua: #7de2d1;
+  font-family: 'Gilda Display', 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', serif;
 }
 
 * {
@@ -23,13 +24,19 @@ body {
   background: var(--bg);
   color: var(--text);
   overflow: hidden;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+}
+
+body.is-modal-open {
+  overflow: hidden !important;
 }
 
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0) 30%);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 40%);
   pointer-events: none;
   mix-blend-mode: screen;
 }
@@ -43,8 +50,8 @@ body::before {
 }
 
 .texture {
-  background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-  opacity: 0.35;
+  background-image: url('https://www.transparenttextures.com/patterns/beige-paper.png');
+  opacity: 0.55;
 }
 
 .scanline {
@@ -62,8 +69,8 @@ body::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(5, 12, 24, 0.85);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(3, 17, 30, 0.82);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(14px);
   z-index: 10;
 }
@@ -75,8 +82,8 @@ body::before {
 }
 
 .top-bar__brand img {
-  width: 220px;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  width: 240px;
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.55));
 }
 
 .top-bar__info p {
@@ -89,7 +96,8 @@ body::before {
 
 .top-bar__info span {
   font-size: 0.85rem;
-  opacity: 0.8;
+  opacity: 0.92;
+  letter-spacing: 0.2em;
 }
 
 .top-bar__actions {
@@ -99,23 +107,33 @@ body::before {
 
 .pill {
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.14);
   color: var(--text);
   font-size: 0.9rem;
-  padding: 0.45rem 1.4rem;
+  padding: 0.5rem 1.6rem;
   border-radius: 999px;
   cursor: pointer;
   font-weight: 500;
-  transition: background 200ms ease, transform 200ms ease;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
 }
 
 .pill:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.22);
   transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 .pill--ghost {
   background: transparent;
+}
+
+.pill--solid {
+  background: linear-gradient(135deg, var(--aqua), var(--accent-strong));
+  border: none;
+  color: #082430;
+  font-weight: 600;
 }
 
 .desktop {
@@ -134,8 +152,8 @@ body::before {
   display: flex;
   gap: 1rem;
   padding: 0.85rem 1.25rem;
-  background: rgba(5, 10, 20, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(5, 10, 20, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
   backdrop-filter: blur(12px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
@@ -144,7 +162,7 @@ body::before {
 
 .dock__icon {
   border: none;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   color: var(--text);
   padding: 0.65rem 1.5rem;
   border-radius: 18px;
@@ -175,7 +193,7 @@ body::before {
   position: absolute;
   width: min(460px, 90vw);
   background: var(--surface);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 22px;
   backdrop-filter: blur(24px);
   box-shadow: 0 35px 80px rgba(0, 0, 0, 0.5);
@@ -203,8 +221,8 @@ body::before {
   padding: 1.1rem 1.4rem;
   cursor: grab;
   user-select: none;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.02));
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .widget__titlebar h2 {
@@ -241,7 +259,7 @@ body::before {
 }
 
 .tv-frame {
-  background: rgba(5, 8, 20, 0.85);
+  background: rgba(5, 8, 20, 0.82);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 1.5rem;
@@ -288,6 +306,7 @@ body::before {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
 }
 
 .tv-controls {
@@ -298,8 +317,8 @@ body::before {
 
 .tv-controls button {
   flex: 1;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   color: var(--text);
   padding: 0.65rem;
   border-radius: 999px;
@@ -353,7 +372,7 @@ body::before {
   padding: 1rem;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.08);
   font-family: 'Gilda Display', serif;
 }
 
@@ -375,6 +394,145 @@ body::before {
   letter-spacing: 0.25em;
   font-size: 0.7rem;
   color: var(--accent);
+}
+
+.status-label + strong {
+  color: var(--aqua);
+}
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 20;
+  transition: opacity 220ms ease;
+}
+
+.auth-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.auth-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(1, 9, 20, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.auth-card {
+  position: relative;
+  width: min(500px, 92vw);
+  background: rgba(6, 24, 37, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 28px;
+  padding: 2rem;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.65);
+}
+
+.auth-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.auth-card__header h2 {
+  margin: 0;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.auth-card__close {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.auth-card__tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.auth-tab {
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.auth-tab.is-active {
+  background: linear-gradient(135deg, var(--aqua), var(--accent-strong));
+  color: #082430;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeIn 200ms ease;
+}
+
+.auth-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+}
+
+.auth-form input {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.auth-form input::placeholder {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.auth-form.hidden {
+  display: none;
+}
+
+.auth-card__status {
+  margin-top: 1.25rem;
+  min-height: 1.5rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.auth-card__status.is-error {
+  color: #ffb3ab;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 900px) {
